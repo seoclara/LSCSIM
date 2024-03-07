@@ -17,8 +17,8 @@ inner_veto_tank_height		20000
 inner_veto_tank_radius		9750
 inner_veto_tank_thickness	  15
 
-buffer_tank_height		17000 #18000
-buffer_tank_radius		8500 #9000
+buffer_tank_height		18000 #17000 #18000
+buffer_tank_radius		9000 #8500 #9000
 buffer_tank_thickness	10
 buffer_thickness        700
 
