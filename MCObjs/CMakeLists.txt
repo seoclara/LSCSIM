@@ -96,5 +96,6 @@ set(${PROJECT_NAME} "Exist!"
 # information and so on. But, this method is not a fancy one.
 #----------------------------------------------------------------------------
 if(CMAKE_COMPILER_IS_GNUCXX)
-    target_link_libraries(MCObjs PRIVATE "c -pie -Wl,-E")
+    #target_link_libraries(MCObjs PRIVATE "c -pie -Wl,-E")
+    target_link_libraries(MCObjs PRIVATE "c -Wl,-E")
 endif()

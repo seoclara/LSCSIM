@@ -44,6 +44,9 @@ int LscDetectorConstruction::quenchingmodel   = 1;
 LscDetectorConstruction::LscDetectorConstruction() : CupDetectorConstruction() {
     whichDetector = kDetector_LscDetector;
     LscMessenger = new LscDetectorMessenger(this);
+
+    fDbgMsgOn = false;
+    fOverlapsCheck = false;
 }
 
 LscDetectorConstruction::~LscDetectorConstruction() {}
@@ -104,7 +107,7 @@ void LscDetectorConstruction::ConstructMaterials() {
     G4String name;
     G4double density;
     G4int nelements;
-    G4int natoms;
+    //G4int natoms;  // JW: comment out unused variable (2024.02.13.)
 
     // --- LAB-based Liquid Scintillator
     density   = 0.86 * g / cm3;

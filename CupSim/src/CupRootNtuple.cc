@@ -539,19 +539,42 @@ void CupRootNtuple::SetPrimary(const G4Event *a_event) {
 }
 
 void CupRootNtuple::SetPhoton() {
+// ---> JW (2023.12.14): Get the number of PMTs from the file pmtcoordinates_ID.dat
+    std::ifstream whereInnerPMT;
+    const char *basic_fn = "pmtcoordinates_ID.dat";
+    if (getenv("LscDATA") != NULL) {
+        whereInnerPMT.open((G4String(getenv("LscDATA")) + "/" + G4String(basic_fn)).c_str());
+    }
+
+    int maxIDPMTNo;
+    if(whereInnerPMT.fail()) {
+        maxIDPMTNo = 0;
+    } else {
+        whereInnerPMT >> maxIDPMTNo;
+    }
+
+    int maxODPMTNo = 0; // JW: If outer PMTs are modified, this value should be changed.
+
+    int ndetPmt = maxIDPMTNo + maxODPMTNo;
+    //const int ndetPmt = 480; // from pmtcoordinates_ID.dat
+    // <--- JW
+
     THit phit;
     Int_t n_photon_hits    = 0;
     Int_t n_photoelectrons = 0;
     Int_t n_op_cerenkov    = 0;
     Int_t n_op_scint       = 0;
+    Int_t n_op_scint_test  = 0; // JW (2023.12.14) NoProcess check
+    Int_t n_op_other       = 0; // JW (2023.12.14) for debugging
     Int_t n_op_reem        = 0;
     Float_t xx, yy, zz;
     Int_t tag;
-    const int ndetPmt = 480; // from pmtcoordinates_ID.dat
-    Int_t nhitInner = 0, nhitOuter = 0;
+        Int_t nhitInner = 0, nhitOuter = 0;
     Int_t nhitPmtInner = 0, nhitPmtOuter = 0;
     Int_t prePmtInnerId = -1, prePmtOuterId = -1;
     Int_t nhitPmt = theHitPMTCollection.GetEntries();
+    G4cout << "nPMTs= " << ndetPmt << G4endl;
+    G4cout << "nInnerPMT= " << maxIDPMTNo << G4endl;
     G4cout << "nhitPMT= " << theHitPMTCollection.GetEntries() << G4endl;
     for (int ipmt = 0; ipmt < theHitPMTCollection.GetEntries(); ipmt++) {
         CupHitPMT *a_pmt = theHitPMTCollection.GetPMT(ipmt);
@@ -575,9 +598,11 @@ void CupRootNtuple::SetPhoton() {
                 prePmtOuterId = photon->GetPMTID();
                 nhitOuter++;
             }
+            if (tag == -1) n_op_other++; // JW (2023.12.14) for debugging
             if (tag == 1) n_op_cerenkov++;
             if (tag == 2) n_op_scint++;
             if (tag == 3) n_op_reem++;
+            if (tag == 4) n_op_scint_test++; // JW (2023.12.14) NoProcess check
             if (flagFullOutputMode) {
                 phit.SetWaveLength(photon->GetWavelength());
                 photon->GetPosition(xx, yy, zz);
@@ -603,10 +628,12 @@ void CupRootNtuple::SetPhoton() {
     }
     if (pmtsd_inner) {
 	G4cout << "nhitPMTInner= " << nhitPmtInner << G4endl;
+        pmtsd_inner->SetNtotPmts(maxIDPMTNo); //JW (2023.12.14)
         pmtsd_inner->SetNhitPmts(nhitPmtInner);
         pmtsd_inner->SetNhits(nhitInner);
     }
     if (pmtsd_outer) {
+        pmtsd_outer->SetNtotPmts(maxODPMTNo); //JW (2023.12.14.)
         pmtsd_outer->SetNhitPmts(nhitPmtOuter);
         pmtsd_outer->SetNhits(nhitOuter);
     }
@@ -623,6 +650,7 @@ void CupRootNtuple::SetPhoton() {
            << G4endl;
     G4cout << "n_op_cerenkov= " << n_op_cerenkov << ", n_op_scint= " << n_op_scint
            << ", n_op_reem= " << n_op_reem << G4endl;
+    G4cout << "n_op_scint_test= " << n_op_scint_test << ", n_op_other= " << n_op_other << G4endl; // JW (2023.12.14) for debugging
 }
 
 void CupRootNtuple::SetScintillation() {
@@ -693,7 +721,7 @@ void CupRootNtuple::SetTGSD(const G4Event *a_event) {
     double tgTotEdepQuenched = 0.;
     G4String logVolName;
     int idxDetID = 0;
-    char detName[300];
+    //char detName[300];  // JW: comment out (2024.02.13.)
 
     int nCell = 0;
     TCell tcell;

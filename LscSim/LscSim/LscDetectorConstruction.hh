@@ -4,6 +4,10 @@
 #include "CupSim/CupDetectorConstruction.hh"
 
 class LscDetectorConstruction : public CupDetectorConstruction {
+  private:
+    G4bool fDbgMsgOn;
+    G4bool fOverlapsCheck;
+
   public:
     typedef enum {
         kDetector_LscDetector = CupDetectorConstruction::kNumGenericDetectors,
@@ -34,6 +38,12 @@ class LscDetectorConstruction : public CupDetectorConstruction {
 
     static G4int GetQuenchingModel() { return quenchingmodel; } // EJ
     virtual void SetQuenchingModel(int w) { quenchingmodel = w; }
+
+    void SetOverlapsCheck(G4bool b) { fOverlapsCheck = b; }
+    G4bool GetOverlapsCheck() { return fOverlapsCheck; }
+
+    void SetDebugMsg(G4bool b) { fDbgMsgOn = b; }
+    G4bool GetDebugMsg() { return fDbgMsgOn; }
 
   protected:
     void ConstructMaterials(); // make all needed materials

@@ -21,6 +21,8 @@ class LscDetectorMessenger : public G4UImessenger {
 
     G4UIcommand *DetGeometrySelectCmd;
     G4UIcommand *DetGeometryQuenchingCmd;
+    G4UIcommand *OverlapsCheckCmd;
+    G4UIcommand *DebugModeCmd;
 
     class LscDetectorMessenger *myMessenger;
 };

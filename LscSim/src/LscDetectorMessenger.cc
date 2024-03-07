@@ -31,9 +31,26 @@ LscDetectorMessenger::LscDetectorMessenger(LscDetectorConstruction *Lscdetector)
     DetGeometryQuenchingCmd->SetGuidance("Set quenching type: 0 by particle type, 1 by Birks");
     DetGeometryQuenchingCmd->AvailableForStates(G4State_PreInit);
     DetGeometryQuenchingCmd->SetParameter(new G4UIparameter("quenching", 's', true));
+
+    // user commands
+    OverlapsCheckCmd = new G4UIcommand("/detGeometry/overlapsCheck", this);
+    OverlapsCheckCmd->SetGuidance("Enable to check overlaps in geometry");
+    OverlapsCheckCmd->AvailableForStates(G4State_PreInit);
+    OverlapsCheckCmd->SetParameter(new G4UIparameter("check", 's', true));
+
+    DebugModeCmd = new G4UIcommand("/detGeometry/debugMode", this);
+    DebugModeCmd->SetGuidance("Enable to print debug messages");
+    DebugModeCmd->AvailableForStates(G4State_PreInit);
+    DebugModeCmd->SetParameter(new G4UIparameter("debug", 's', true));
+
 }
 
-LscDetectorMessenger::~LscDetectorMessenger() {}
+LscDetectorMessenger::~LscDetectorMessenger() {
+    delete DetGeometrySelectCmd;
+    delete DetGeometryQuenchingCmd;
+    delete OverlapsCheckCmd;
+    delete DebugModeCmd;
+}
 
 void LscDetectorMessenger::SetNewValue(G4UIcommand *command, G4String newValues) {
     // GeometrySelectCmd
@@ -61,10 +78,8 @@ void LscDetectorMessenger::SetNewValue(G4UIcommand *command, G4String newValues)
             }
             G4cerr << "Unknown detector geometry style " << newValues << G4endl;
         }
-    }
-
-    // Quenching model
-    if (command == DetGeometryQuenchingCmd) {
+    } else if (command == DetGeometryQuenchingCmd) {
+        // Quenching model
         istringstream is((const char *)newValues);
         int index = -1;
         is >> index;
@@ -78,10 +93,15 @@ void LscDetectorMessenger::SetNewValue(G4UIcommand *command, G4String newValues)
         }
 
         LscDetector->SetQuenchingModel(index);
-    }
-
-    // invalid command
-    else {
+    } else if (command == OverlapsCheckCmd){
+        G4bool check = StoB(newValues);
+        LscDetector->SetOverlapsCheck(check);
+        G4cout << "detGeometry/overlapsCheck " << LscDetector->GetOverlapsCheck() << G4endl;
+    } else if (command == DebugModeCmd){
+        G4bool debug = StoB(newValues);
+        LscDetector->SetDebugMsg(debug);
+        G4cout << "detGeometry/debugMode " << LscDetector->GetDebugMsg() << G4endl;
+    } else {
         G4cerr << "invalid detector \"set\" command\n" << flush;
     }
 }

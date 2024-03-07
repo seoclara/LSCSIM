@@ -1,20 +1,36 @@
 # values -- lengths in millimeters
-tunnel_arch_radius		5000
-pit_depth                       20000
-pit_radius                      10000
-rock_shell_thickness 		20000     # min thickness of rock around cavern
 
-outer_veto_tank_height		20000
-outer_veto_tank_radius		10000
-outer_veto_tank_thickness	  15
+world_size              50000
+rock_shell_thickness    20000     # min thickness of rock around cavern
+
+tunnel_arch_radius		 5000
+
+cavern_size             22000
+cavern_height            8000
+cavern_arch_radius      31250
+cavern_arch_height       2000
+
+pit_depth               20000
+pit_radius               9750
 
 inner_veto_tank_height		20000
-inner_veto_tank_radius		10000
+inner_veto_tank_radius		9750
 inner_veto_tank_thickness	  15
 
-buffer_tank_height		18000
-buffer_tank_radius		9000
-buffer_tank_thickness	  	  10 
+buffer_tank_height		17000 #18000
+buffer_tank_radius		8500 #9000
+buffer_tank_thickness	10
+buffer_thickness        700
+
+target_tank_height      15000
+target_tank_radius      7500
+target_tank_thickness   10
+
+
+
+#outer_veto_tank_height		20000
+#outer_veto_tank_radius		9750
+#outer_veto_tank_thickness	  15
 
 gamma_catcher_vessel_height	4000
 gamma_catcher_vessel_radius	1800
@@ -27,7 +43,7 @@ target_vessel_thickness		  12  # ???? swapped with gamma_catcher ????
 # pmt option flag
 PMT_rotation_factor_for_lsc_OD  0  # 0 == no tilt, 1.0 == full tilt
 omit_pmt_masks			1
-omit_id_pmts			0  # non-zero means no PMTs in Inner Detector
+#omit_id_pmts			0  # non-zero means no PMTs in Inner Detector
 
 # calibration "fishline"
 fishline_top_z       2.8e3         # dist from center of tank to top of line

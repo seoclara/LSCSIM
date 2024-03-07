@@ -18,6 +18,7 @@
 
 #ifdef G4VIS_USE
 #include "CupSim/CupVisMessenger.hh"
+#include "G4VisManager.hh"
 #include "G4VisExecutive.hh"
 #endif
 #include <cstdlib>
@@ -77,7 +78,7 @@ int main (int argc,char** argv)
 // Visualization, only if you choose to have it!
 #ifdef G4VIS_USE
     G4VisManager *theVisManager      = new G4VisExecutive();
-    CupVisMessenger *theVisMessenger = new CupVisMessenger(theVisManager);
+    //CupVisMessenger *theVisMessenger = new CupVisMessenger(theVisManager); // JW: comment out (2024.02.13.)
     theVisManager->Initialize();
 #endif
     // user interface
@@ -112,7 +113,7 @@ int main (int argc,char** argv)
 
 #ifdef G4VIS_USE
     delete theVisManager;
-    delete theVisMessenger;
+    //delete theVisMessenger; // JW: comment out (2024.02.13.)
 #endif
 
     delete theRunManager;
