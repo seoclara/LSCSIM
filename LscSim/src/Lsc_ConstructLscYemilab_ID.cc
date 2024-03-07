@@ -100,7 +100,7 @@ void LscDetectorConstruction::ConstructLscYemilab_ID() {
 	///////////////////////////////////////////////////////////////////////////
 	// --- make the fundamental inner  PMT assembly
 	///////////////////////////////////////////////////////////////////////////
-	Cup_PMT_LogicalVolume *_logiInnerPMT20 = new Cup_10inch_LogicalVolume(
+	Cup_PMT_LogicalVolume *_logiInnerPMT20 = new Cup_20inch_LogicalVolume(
 									"InnerPMT", 
 									_water, //_mineralOil,
 									_glass,
