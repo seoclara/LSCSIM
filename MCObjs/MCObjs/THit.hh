@@ -20,6 +20,7 @@ class THit : public TObject {
     Double_t Time;
     Int_t PMTno;
     Int_t Wavelength;
+    Float_t ke; //JW: (2024.03.08) added for checking KE and wavelength
     Float_t x, y, z;
     Float_t px, py, pz;
     Float_t polx, poly, polz;
@@ -36,6 +37,7 @@ class THit : public TObject {
     Double_t GetHitTime() const { return Time; }
     Int_t GetHitPMT() const { return PMTno; }
     Int_t GetWaveLength() const { return Wavelength; }
+    Float_t GetKE() const { return ke; }
     Float_t GetX() const { return x; }
     Float_t GetY() const { return y; }
     Float_t GetZ() const { return z; }
@@ -51,6 +53,7 @@ class THit : public TObject {
     void SetHitTime(Double_t time) { Time = time; }
     void SetHitPMT(int no) { PMTno = no; }
     void SetWaveLength(int wl) { Wavelength = wl; }
+    void SetKE(Float_t kee) { ke = kee; }
     void SetX(Float_t xx) { x = xx; }
     void SetY(Float_t yy) { y = yy; }
     void SetZ(Float_t zz) { z = zz; }

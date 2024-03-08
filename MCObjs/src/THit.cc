@@ -4,12 +4,12 @@ ClassImp(THit);
 
 //______________________________________________________________________________
 THit::THit()
-    : TObject(), Time(-1), PMTno(-1), Wavelength(-1), x(-1), y(-1), z(-1), px(-1), py(-1), pz(-1),
+    : TObject(), Time(-1), PMTno(-1), Wavelength(-1), ke(-1), x(-1), y(-1), z(-1), px(-1), py(-1), pz(-1),
       polx(-1), poly(-1), polz(-1), Count(-1), ProcessTag(-1) {}
 
 //______________________________________________________________________________
 THit::THit(const THit &hit)
-    : TObject(hit), Time(hit.Time), PMTno(hit.PMTno), Wavelength(hit.Wavelength), x(hit.x),
+    : TObject(hit), Time(hit.Time), PMTno(hit.PMTno), Wavelength(hit.Wavelength), ke(hit.ke), x(hit.x),
       y(hit.y), z(hit.z), px(hit.px), py(hit.py), pz(hit.pz), polx(hit.polx), poly(hit.poly),
       polz(hit.polz), Count(hit.Count), ProcessTag(hit.ProcessTag) {}
 // Copy a track object
@@ -22,6 +22,7 @@ THit &THit::operator=(const THit &hit) {
     Time             = hit.GetHitTime();
     PMTno            = hit.GetHitPMT();
     Wavelength       = hit.GetWaveLength();
+    ke               = hit.GetKE(); //JW: (2024.03.08) added for checking KE and wavelength
     x                = hit.GetX();
     y                = hit.GetY();
     z                = hit.GetZ();

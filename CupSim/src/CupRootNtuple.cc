@@ -605,6 +605,7 @@ void CupRootNtuple::SetPhoton() {
             if (tag == 4) n_op_scint_test++; // JW (2023.12.14) NoProcess check
             if (flagFullOutputMode) {
                 phit.SetWaveLength(photon->GetWavelength());
+                phit.SetKE(photon->GetKineticEnergy()); // JW: (2024.03.08) for checking ke and wavelength
                 photon->GetPosition(xx, yy, zz);
                 phit.SetX(xx);
                 phit.SetY(yy);

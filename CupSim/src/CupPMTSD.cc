@@ -66,6 +66,7 @@ void CupPMTSD::SimpleHit(G4int ipmt, G4double time, G4double kineticEnergy,
     hit_photon->SetPMTID((int)ipmt);
     hit_photon->SetTime((double)time);
     hit_photon->SetKineticEnergy((double)kineticEnergy);
+    hit_photon->SetWavelength((double)kineticEnergy); // JW: (2024.03.08) added for checking KE and wavelength
     hit_photon->SetPosition((double)hit_position.x(), (double)hit_position.y(),
                             (double)hit_position.z());
     hit_photon->SetMomentum((double)hit_momentum.x(), (double)hit_momentum.y(),
