@@ -222,7 +222,7 @@ void LscDetectorConstruction::ConstructLscYemilab_ID() {
 								_logiInnerPMT20,
 								BufferInteriorPhys, // physical parent
 								false,
-								InnerPMTno,
+								InnerPMTno-1,
 								fOverlapsCheck);
 		}
 	}
